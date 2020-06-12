@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   jupyterhub:
@@ -32,11 +32,19 @@ services:
       - "80:80"
       - "443:443"
       - "8080:8080"
+    secrets:
+      - my_cert_secret
+      - my_key_secret
     volumes:
-      - ./reverse-proxy/traefik.toml:/etc/traefik/traefik.toml
-      - /etc/certs:/etc/certs
+      - ${PWD}/reverse-proxy/traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock
     restart: on-failure
 
 volumes:
   jupyterhub_data:
+
+secrets:
+  my_cert_secret:
+    file: ${HOME}/docker-volumes/etc/letsencrypt/live/worker.rhagan.fr/fullchain.pem
+  my_key_secret:
+    file: ${HOME}/docker-volumes/etc/letsencrypt/live/worker.rhagan.fr/privkey.pem    
