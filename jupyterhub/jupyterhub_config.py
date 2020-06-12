@@ -16,7 +16,8 @@ c.JupyterHub.admin_access = True
 c.Spawner.default_url = '/lab'
 
 # Authenticate users with GitHub OAuth
-c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
+from oauthenticator.github import GitHubOAuthenticator
+c.JupyterHub.authenticator_class = GitHubOAuthenticator
 c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
 
 c.Authenticator.admin_users = { 'rfResearch' }
